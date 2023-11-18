@@ -1,4 +1,5 @@
 # K-Wave Wiz Frontend
+# K-Wave Wiz Frontend
 
 Welcome to the frontend repository of K-Wave Wiz, your ultimate destination for K-pop trivia and fun! This repository contains the frontend codebase of the interactive quiz app.
 
@@ -18,11 +19,10 @@ To run the K-Wave Wiz Frontend locally, follow these steps:
 
 - Clone this repository:
   ```bash
-  git clone https://github.com/your-username/k-wave-wiz-frontend.git
+  git clone https://github.com/zxtm89j1/k-wizz-fe.git
   ```
 
-1. Navigate to the project directory:
-   cd k-wave-wiz-frontend
+1. Navigate to the project directory.
 
 2. Install dependencies:
    npm install
