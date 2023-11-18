@@ -18,7 +18,7 @@ To run the K-Wave Wiz Frontend locally, follow these steps:
 
 - Clone this repository:
   ```bash
-  git clone https://github.com/your-username/k-wave-wiz-frontend.git](https://github.com/zxtm89j1/k-wizz-fe.git
+  git clone https://github.com/zxtm89j1/k-wizz-fe.git
   ```
 
 1. Navigate to the project directory.
