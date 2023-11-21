@@ -3,6 +3,7 @@ import Home from "./components/Home";
 import NoPage from "./components/NoPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>

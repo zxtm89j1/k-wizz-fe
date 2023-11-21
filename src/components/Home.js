@@ -97,14 +97,14 @@ const Home = () => {
 
   return (
     <div className="h-full">
-      <div className="bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 text-white py-20 h-[40rem] relative flex items-center">
+      <div className="bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 text-white py-20 h-[25rem] md:h-[40rem] relative flex items-center">
         <img
-          className="h-[40rem] absolute right-0 bottom-0 z-10"
+          className="h-[15rem] md:h-[30rem] lg:md:h-[40rem]  absolute right-0 bottom-0 z-10"
           src={nana}
-          alt="image"
+          alt="nana-afterschool"
         />
         <div className="container mx-auto text-center z-20">
-          <h1 className="text-7xl font-extrabold leading-tight mb-4 font-fredoka">
+          <h1 className="text-3xl md:text-7xl font-extrabold leading-tight mb-4 font-fredoka">
             Welcome to K-Wave Wiz
           </h1>
           <p className="text-xl mb-8 font-poppins">
@@ -118,35 +118,104 @@ const Home = () => {
           </a>
         </div>
       </div>
-      <div className="w-full bg-gradient-to-tr from-white to-purple-600 flex justify-center items-center pt-5 pl-5 pr-5">
-        <img className="h-[40rem]" src={minwoo} alt="image" />
-        <div className="italic text-center align-middle text-5xl p-10 font-fredoka">
+      <div className="w-full bg-gradient-to-tr from-white to-purple-600 flex justify-center items-center md:pt-5 md:pl-5 md:pr-5 ">
+        <img
+          className="h-[10rem] md:h-[20rem] lg:h-[40rem]"
+          src={minwoo}
+          alt="image"
+        />
+        <div className="italic text-center align-middle text-m md:text-2xl lg:text-4xl 2xl:text-5xl p-5 md:p-10 font-fredoka ">
           "{welcomeMessage}"
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-pink-500 via-purple-400 to-[#5AB9E8]">
-        <div className="text-3xl font-extrabold font-fredoka ">
+      <div className="bg-gradient-to-r from-pink-500 via-purple-400 to-[#5AB9E8] p-4 lg:p-10">
+        <div className="text-xl sm:text-2xl lg:text-5xl font-extrabold font-fredoka text-white">
           Recent Scores
         </div>
 
-        <div className="">
-          <div>
-            <div>Score 1</div>
-            <div>Score 2</div>
-            <div>Score 3</div>
-            <div>Score 4</div>
-            <div>Score 5</div>
+        <div className="flex items-center justify-center ">
+          <div className="p-1 md:p-5 xl:p-10">
+            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
+              <div className="text-center font-fredoka text-white text-[0.5rem] sm:text-xs md:text-2xl lg:text-3xl p-1 xl:p-2 font-bold">
+                Username
+              </div>
+              <div className="text-center font-fredoka text-white text-[0.5rem] sm:text-xs md:text-2xl lg:text-3xl p-1 xl:p-2 font-bold">
+                Score
+              </div>
+              <div className="text-center font-fredoka text-white text-[0.5rem] sm:text-xs md:text-2xl lg:text-3xl p-1 xl:p-2 font-bold">
+                Time and Date
+              </div>
+            </div>
+            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                heyow1
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                11/40
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                Secret
+              </div>
+            </div>
+            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                heyow2
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                11/40
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                Secret
+              </div>
+            </div>
+            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                heyow3
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                11/40
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                Secret
+              </div>
+            </div>
+            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                heyow4
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                11/40
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                Secret
+              </div>
+            </div>
+            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                heyow5
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                11/40
+              </div>
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+                Secret
+              </div>
+            </div>
           </div>
 
-          <img src={trophy} alt="trophy" />
+          <img
+            src={trophy}
+            alt="trophy"
+            className="h-[8rem] m-0 md:h-[10] lg:h-[20rem]"
+          />
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 text-white py-20 h-[20rem] relative flex items-center justify-center">
+      <div className="bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 text-white py-20 h-[10rem] md:h-[20rem] relative flex items-center justify-center">
         <a
           href="#start-quiz"
-          className="bg-white text-purple-600 hover:text-purple-800 py-8 px-24 rounded-full text-4xl font-semibold transition duration-300 cursor-pointer"
+          className="bg-white text-purple-600 py-4 px-12 md:py-8 md:px-24 rounded-full md:text-3xl font-semibold transition duration-300 cursor-pointer hover:bg-[#5AB9E8] hover:text-white "
         >
           Let's Rock!
         </a>
