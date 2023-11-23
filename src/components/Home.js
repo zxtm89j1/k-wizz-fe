@@ -148,57 +148,57 @@ const Home = () => {
               </div>
             </div>
             <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 heyow1
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 11/40
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 Secret
               </div>
             </div>
             <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 heyow2
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 11/40
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 Secret
               </div>
             </div>
             <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 heyow3
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 11/40
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 Secret
               </div>
             </div>
             <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 heyow4
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 11/40
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 Secret
               </div>
             </div>
             <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 heyow5
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 11/40
               </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2">
+              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
                 Secret
               </div>
             </div>

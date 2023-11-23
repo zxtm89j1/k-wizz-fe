@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import kyler from "../images/kyler.webp";
+import axios from "axios";
+import $ from "jquery";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     email: "",
     username: "",
-    accountType: "",
-    fname: "",
-    lname: "",
+    account_type: "",
+    first_name: "",
+    last_name: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
   });
 
   const handleChange = (e) => {
@@ -22,9 +24,22 @@ const Signup = () => {
     }));
   };
 
-  const submitData = (e) => {
+  const getToken = async () => {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/sanctum/csrf-cookie"
+    );
+
+    console.log(response);
+  };
+
+  getToken();
+
+  const submitData = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    let response = await axios.post("http://localhost:8000/signup", formData);
+
+    await console.log(response);
   };
 
   return (
@@ -33,6 +48,8 @@ const Signup = () => {
         className="p-5 bg-white rounded-lg shadow-lg md:w-96 sm:w-80 xs:w-72 z-20"
         onSubmit={submitData}
       >
+
+        
         <div className="self-start font-fredoka text-gray-800 sm:text-2xl mb-4">
           Sign Up
         </div>
@@ -51,7 +68,6 @@ const Signup = () => {
             onChange={handleChange}
           />
         </div>
-
         <div className="mb-4">
           <label
             htmlFor="username"
@@ -67,17 +83,16 @@ const Signup = () => {
             value={formData.username}
           />
         </div>
-
         <div className="mb-4">
           <label
-            htmlFor="account-type"
+            htmlFor="account_type"
             className="block text-gray-800 text-sm sm:text-base mb-1 font-poppins"
           >
             Account Type:
           </label>
           <select
             className="w-full border-2 border-pink-500/50 focus:border-pink-700 focus:outline-none focus:ring-0 rounded-md px-1 py-0.5 sm:px-2 sm:py-1 font-fredoka"
-            name="accountType"
+            name="account_type"
             onChange={handleChange}
             value={formData.accountType}
           >
@@ -90,10 +105,9 @@ const Signup = () => {
             </option>
           </select>
         </div>
-
         <div className="mb-4">
           <label
-            htmlFor="fname"
+            htmlFor="first_name"
             className="block text-gray-800 text-sm sm:text-base mb-1 font-poppins"
           >
             First Name:
@@ -101,15 +115,14 @@ const Signup = () => {
           <input
             className="w-full border-2 border-pink-500/50 rounded-md px-1 py-0.5 sm:px-2 sm:py-1 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
             type="text"
-            name="fname"
+            name="first_name"
             onChange={handleChange}
             value={formData.fname}
           />
         </div>
-
         <div className="mb-4">
           <label
-            htmlFor="lname"
+            htmlFor="last_name"
             className="block text-gray-800 text-sm sm:text-base mb-1 font-poppins"
           >
             Last Name:
@@ -117,12 +130,11 @@ const Signup = () => {
           <input
             className="w-full border-2 border-pink-500/50 rounded-md px-1 py-0.5 sm:px-2 sm:py-1 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
             type="text"
-            name="lname"
+            name="last_name"
             onChange={handleChange}
             value={formData.lname}
           />
         </div>
-
         <div className="mb-4">
           <label
             htmlFor="password"
@@ -138,10 +150,9 @@ const Signup = () => {
             value={formData.password}
           />
         </div>
-
         <div className="mb-4">
           <label
-            htmlFor="confirmPassword"
+            htmlFor="confirm_password"
             className="block text-gray-800 text-sm sm:text-base mb-1 font-poppins"
           >
             Confirm Password:
@@ -149,12 +160,11 @@ const Signup = () => {
           <input
             className="w-full border-2 border-pink-500/50 rounded-md px-1 py-0.5 sm:px-2 sm:py-1 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
             type="password"
-            name="confirmPassword"
+            name="confirm_password"
             onChange={handleChange}
             value={formData.confirmPassword}
           />
         </div>
-
         <div className="flex justify-center">
           <button
             className="w-full md:w-3/4 bg-pink-500 text-white rounded-md py-2 px-4 hover:bg-pink-600 transition duration-300 font-fredoka"
