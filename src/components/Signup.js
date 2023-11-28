@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import kyler from "../images/kyler.webp";
 import axios from "axios";
-import $ from "jquery";
+import {
+  GlobalLoading,
+  showLoading,
+  globalLoading,
+  show,
+  hide,
+} from "react-global-loading";
+import Swal from "sweetalert2";
 
 const Signup = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -24,32 +32,81 @@ const Signup = () => {
     }));
   };
 
-  const getToken = async () => {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/sanctum/csrf-cookie"
-    );
-
-    console.log(response);
-  };
-
-  getToken();
-
   const submitData = async (e) => {
     e.preventDefault();
 
-    let response = await axios.post("http://localhost:8000/signup", formData);
+    show();
 
-    await console.log(response);
+    try {
+      let response = await axios.post("http://localhost:8000/signup", formData);
+
+      if (response.status === 200) {
+        Swal.fire({
+          title: "Success!",
+          text: response.data.message,
+          icon: "success",
+          confirmButtonText: "Ok",
+        })
+          .then(hide())
+          .then(() => {
+            window.location.reload();
+          });
+
+        await console.log(response);
+      }
+
+      // alert(message);
+
+      console.log(response);
+    } catch (error) {
+      if (error.response.data.errors) {
+        let errorObject = await error.response.data.errors;
+
+        let errorMessages = {
+          title: "Error!",
+          messages: [],
+          icon: "error",
+          confirmButtonText: "Ok",
+        };
+
+        let errorMessageText = "";
+        // Using Object.entries to get key-value pairs and then iterating over them
+        for (let [index, [key, messages]] of Object.entries(
+          errorObject
+        ).entries()) {
+          for (let i = 0; i < messages.length; i++) {
+            errorMessages.messages.push(`${messages[i]}`);
+          }
+        }
+
+        errorMessageText += errorMessages.messages.join("\r\n");
+
+        errorMessages.text = errorMessageText;
+
+        delete errorMessages.messages;
+
+        await Swal.fire(errorMessages);
+        await hide();
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: error.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+
+        await hide();
+      }
+    }
   };
 
   return (
     <div className="h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-purple-300 flex justify-center items-center relative">
+      <GlobalLoading />
       <form
         className="p-5 bg-white rounded-lg shadow-lg md:w-96 sm:w-80 xs:w-72 z-20"
         onSubmit={submitData}
       >
-
-        
         <div className="self-start font-fredoka text-gray-800 sm:text-2xl mb-4">
           Sign Up
         </div>

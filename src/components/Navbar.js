@@ -1,4 +1,3 @@
-import { useState } from "react";
 import logoBlack from "../images/K-Wave-black.png";
 import logoFullWhite from "../images/K-Wave-white-full.webp";
 
@@ -46,15 +45,21 @@ const Navbar = () => {
               isSignUp ? "text-white" : "text-black"
             } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
           >
-            Log in
+            <a href="/login">Log in</a>
           </li>
-          <li
-            className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
-              isSignUp ? "text-white" : "text-black"
-            } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
-          >
-            <a href="/signup">Sign Up</a>
-          </li>
+
+          {isSignUp ? (
+            <div className="hidden"></div>
+          ) : (
+            <li
+              className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
+                isSignUp ? "text-white" : "text-black"
+              } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
+            >
+              <a href="/signup">Sign Up</a>
+            </li>
+          )}
+
           <li
             className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
               isSignUp ? "text-white" : "text-black"

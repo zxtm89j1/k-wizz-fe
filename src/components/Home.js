@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import nana from "../images/nana1.png";
 import trophy from "../images/Trophy.webp";
 import minwoo from "../images/minwoo.webp";
+import axios from "axios";
 
 const Home = () => {
   let welcomeMessageArray = [
@@ -94,6 +95,12 @@ const Home = () => {
     // Clear the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, [number]); // Include 'number' in the dependency array to ensure useEffect updates when 'number' changes
+
+  // useEffect(async () => {
+  //   let response = await axios.get("http://localhost:8000/");
+
+  //   await console.log(response);
+  // }, []);
 
   return (
     <div className="h-full">
