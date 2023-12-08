@@ -3,8 +3,30 @@ import nana from "../images/nana1.png";
 import trophy from "../images/Trophy.webp";
 import minwoo from "../images/minwoo.webp";
 import axios from "axios";
+import { GlobalLoading, show, hide } from "react-global-loading";
 
 const Home = () => {
+  const [nameOfUser, setNameOfUser] = useState("");
+  let token = localStorage.getItem("authTokenJWT");
+
+  useEffect(() => {
+    let fetchUser = async () => {
+      try {
+        let response = await axios.get("http://localhost:8000/api/user", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setNameOfUser((prevNameOfUser) => response.data.first_name);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   let welcomeMessageArray = [
     "Welcome to K-Wave Wiz – Your Ultimate Destination for K-pop Trivia and Fun!",
     "Step into the world of K-pop magic! Welcome to K-Wave Wiz, where the music never stops, and the quizzes never end!",
@@ -96,12 +118,6 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, [number]); // Include 'number' in the dependency array to ensure useEffect updates when 'number' changes
 
-  // useEffect(async () => {
-  //   let response = await axios.get("http://localhost:8000/");
-
-  //   await console.log(response);
-  // }, []);
-
   return (
     <div className="h-full">
       <div className="bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 text-white py-20 h-[25rem] md:h-[40rem] relative flex items-center">
@@ -131,7 +147,18 @@ const Home = () => {
           src={minwoo}
           alt="image"
         />
+
         <div className="italic text-center align-middle text-m md:text-2xl lg:text-4xl 2xl:text-5xl p-5 md:p-10 font-fredoka ">
+          {nameOfUser ? (
+            <div className="text-[1.5rem] sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl mb-3 text-purple-600 font-bold">
+              {nameOfUser && `Welcome, ${nameOfUser}!`}
+            </div>
+          ) : (
+            <div className="hidden"></div>
+          )}
+          <div className="mb-3">
+            {/* Add any additional styling you want for the welcome message */}
+          </div>
           "{welcomeMessage}"
         </div>
       </div>
