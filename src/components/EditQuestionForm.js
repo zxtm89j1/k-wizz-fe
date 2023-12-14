@@ -1,7 +1,11 @@
+import axios from "axios";
+import { GlobalLoading, show, hide } from "react-global-loading";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const EditQuestionForm = (props) => {
   let question = props.question;
+  let token = localStorage.getItem("authTokenJWT");
   const handleCancel = () => {
     // Call the function to set setIsEditing to false
     props.onCancel();
@@ -47,14 +51,55 @@ const EditQuestionForm = (props) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    show();
 
     console.log(questionNewCopy);
+
+    try {
+      let response = await axios.patch(
+        `http://localhost:8000/api/auth/editquestion/${props.question.id}`,
+        questionNewCopy,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.status === 200) {
+        await console.log(response);
+        await Swal.fire({
+          title: "Success!",
+          text: response.data.message,
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+
+        await hide();
+        window.location.reload();
+      }
+    } catch (error) {
+      if (error.response.data.error) {
+        await Swal.fire({
+          title: "Error!",
+          text: error.response.data.error,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        hide();
+      } else {
+        await Swal.fire({
+          title: "Error!",
+          text: error.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        hide();
+      }
+    }
   };
 
   return (
     <div className="flex justify-center items-center flex-col h-[100vh] fixed top-0 bottom-0 left-0 right-0 bg-gray-500 bg-opacity-60">
+      <GlobalLoading />
       <form
         className="max-w-md w-full bg-white z-20 p-5 rounded-lg"
         onSubmit={handleSubmit}

@@ -4,10 +4,12 @@ import trophy from "../images/Trophy.webp";
 import minwoo from "../images/minwoo.webp";
 import axios from "axios";
 import { GlobalLoading, show, hide } from "react-global-loading";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const [nameOfUser, setNameOfUser] = useState("");
-  let token = localStorage.getItem("authTokenJWT");
+  const [lastFiveScores, setLastFiveScores] = useState();
+  const [token, setToken] = useState(localStorage.getItem("authTokenJWT"));
 
   useEffect(() => {
     let fetchUser = async () => {
@@ -25,6 +27,41 @@ const Home = () => {
     };
 
     fetchUser();
+  }, []);
+
+  useEffect(() => {
+    let getLastFiveScores = async () => {
+      show();
+      try {
+        let response = await axios.get("http://localhost:8000/api/auth/home", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          // alert("Last five questions were set!");
+          console.log(response);
+          setLastFiveScores((prev) => response.data.message);
+          hide();
+        }
+      } catch (error) {
+        console.log(error);
+        hide();
+        // Swal.fire({
+        //   title: "Error!",
+        //   text: error.response.data.error,
+        //   icon: "error",
+        //   confirmButtonText: "Ok",
+        // }).then((result) => {
+        //   if (result.isConfirmed) {
+
+        //   }
+        // });
+      }
+    };
+
+    getLastFiveScores();
   }, []);
 
   let welcomeMessageArray = [
@@ -118,8 +155,37 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, [number]); // Include 'number' in the dependency array to ensure useEffect updates when 'number' changes
 
+  const convertTime = (string) => {
+    // Your timestamp string
+    let timestampStr = string;
+
+    // Convert the timestamp string to a Date object
+    let timestamp = new Date(timestampStr);
+
+    // Set the time zone to 'Asia/Manila' (Philippine Time)
+    let options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZone: "Asia/Manila",
+    };
+
+    // Format the date as a human-readable string in PH Time
+    let phTime = timestamp.toLocaleString("en-US", options);
+
+    let phTimeArray = phTime.split(", ");
+
+    return phTimeArray[0];
+  };
+
   return (
     <div className="h-full">
+      <GlobalLoading />
+
+      {token && lastFiveScores && hide()}
       <div className="bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 text-white py-20 h-[25rem] md:h-[40rem] relative flex items-center">
         <img
           className="h-[15rem] md:h-[30rem] lg:md:h-[40rem]  absolute right-0 bottom-0 z-10"
@@ -134,7 +200,7 @@ const Home = () => {
             Your Ultimate Destination for K-pop Trivia and Fun!
           </p>
           <a
-            href="#start-quiz"
+            href="/play"
             className="bg-white text-purple-600 hover:text-purple-800 py-2 px-6 rounded-full text-lg font-semibold transition duration-300 cursor-pointer"
           >
             Start Quiz
@@ -178,64 +244,24 @@ const Home = () => {
                 Score
               </div>
               <div className="text-center font-fredoka text-white text-[0.5rem] sm:text-xs md:text-2xl lg:text-3xl p-1 xl:p-2 font-bold">
-                Time and Date
+                Date
               </div>
             </div>
-            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                heyow1
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                11/40
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                Secret
-              </div>
-            </div>
-            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                heyow2
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                11/40
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                Secret
-              </div>
-            </div>
-            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                heyow3
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                11/40
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                Secret
-              </div>
-            </div>
-            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                heyow4
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                11/40
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                Secret
-              </div>
-            </div>
-            <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                heyow5
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                11/40
-              </div>
-              <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
-                Secret
-              </div>
-            </div>
+
+            {lastFiveScores &&
+              lastFiveScores.map((score) => (
+                <div className="grid grid-cols-3 xl:gap-x-[10rem] gap-y-[10rem]">
+                  <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
+                    {score.username}
+                  </div>
+                  <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
+                    {score.score}/{score.number_of_questions}
+                  </div>
+                  <div className="text-center font-poppins text-[0.5rem] sm:text-xs md:text-2xl p-1 xl:p-2 text-white">
+                    {convertTime(score.created_at)}
+                  </div>
+                </div>
+              ))}
           </div>
 
           <img
@@ -248,7 +274,7 @@ const Home = () => {
 
       <div className="bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 text-white py-20 h-[10rem] md:h-[20rem] relative flex items-center justify-center">
         <a
-          href="#start-quiz"
+          href="/play"
           className="bg-white text-purple-600 py-4 px-12 md:py-8 md:px-24 rounded-full md:text-3xl font-semibold transition duration-300 cursor-pointer hover:bg-[#5AB9E8] hover:text-white "
         >
           Let's Rock!

@@ -91,6 +91,36 @@ const Navbar = () => {
 
   checkUrl();
 
+  // const checkscreenWidth = () => {
+  //   if (window.innerWidth < 444) {
+
+  //   }
+  // }
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenWidth = () => {
+      if (window.innerWidth < 444) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+      }
+    };
+
+    checkScreenWidth(); // Call the function once to set the initial state
+
+    // Add event listener to update state when the window is resized
+    window.addEventListener("resize", checkScreenWidth);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", checkScreenWidth);
+    };
+  }, []); // Empty dependency array ensures that this effect runs only once after initial render
+
+
+
   return (
     <div>
       <GlobalLoading />
@@ -116,75 +146,87 @@ const Navbar = () => {
           </div>
         </a>
 
-        <ul className="flex justify-evenly">
-          {isLogIn || token ? (
-            <div className="hidden"></div>
-          ) : (
-            <li
-              className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
-                isSignUp ? "text-white" : "text-black"
-              } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
-            >
-              <a href="/login">Log in</a>
-            </li>
-          )}
+        {!isMobile && (
+          <ul className="flex justify-evenly">
+            {isLogIn || token ? (
+              <div className="hidden"></div>
+            ) : (
+              <li
+                className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
+                  isSignUp ? "text-white" : "text-black"
+                } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
+              >
+                <a href="/login">Log in</a>
+              </li>
+            )}
 
-          {isSignUp || token ? (
-            <div className="hidden"></div>
-          ) : (
-            <li
-              className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
-                isSignUp ? "text-white" : "text-black"
-              } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
-            >
-              <a href="/signup">Sign Up</a>
-            </li>
-          )}
+            {isSignUp || token ? (
+              <div className="hidden"></div>
+            ) : (
+              <li
+                className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
+                  isSignUp ? "text-white" : "text-black"
+                } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
+              >
+                <a href="/signup">Sign Up</a>
+              </li>
+            )}
 
-          {isAdmin && !isAddQuestion && (
-            <li
-              className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
-                isSignUp ? "text-white" : "text-black"
-              } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
-            >
-              <a href="/addquestion">Add Question</a>
-            </li>
-          )}
-          {/* 
+            {isAdmin && !isAddQuestion && (
+              <li
+                className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
+                  isSignUp ? "text-white" : "text-black"
+                } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
+              >
+                <a href="/addquestion">Add Question</a>
+              </li>
+            )}
+            {/* 
           {token ? hide() : <></>}
 
           {onlyHome ? hide() : <></>} */}
 
-          {isAdmin && (
+            {isAdmin && (
+              <li
+                className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
+                  isSignUp ? "text-white" : "text-black"
+                } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
+              >
+                <a href="/myquestions">My Questions</a>
+              </li>
+            )}
+
             <li
               className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
                 isSignUp ? "text-white" : "text-black"
               } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
             >
-              <a href="/myquestions">My Questions</a>
+              <a href="/play">Play</a>
             </li>
-          )}
 
-          <li
-            className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
-              isSignUp ? "text-white" : "text-black"
-            } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
-          >
-            <a href="/play">Play</a>
-          </li>
+            {token && (
+              <li
+                className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
+                  isSignUp ? "text-white" : "text-black"
+                } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
+              >
+                <a href="/myaccount">My Account</a>
+              </li>
+            )}
 
-          {token && (
-            <li
-              className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
-                isSignUp ? "text-white" : "text-black"
-              } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
-            >
-              <form onSubmit={handleLogOut}>
-                <button>Log out</button>
-              </form>
-            </li>
-          )}
-        </ul>
+            {token && (
+              <li
+                className={`p-1 md:p-3 font-fredoka text-xs md:text-lg cursor-pointer ${
+                  isSignUp ? "text-white" : "text-black"
+                } ${isSignUp ? "hover:text-pink-900" : "hover:text-white"}`}
+              >
+                <form onSubmit={handleLogOut}>
+                  <button>Log out</button>
+                </form>
+              </li>
+            )}
+          </ul>
+        )}
       </nav>
     </div>
   );
