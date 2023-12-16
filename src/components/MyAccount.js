@@ -6,8 +6,8 @@ import Swal from "sweetalert2";
 const MyAccount = () => {
   const [userId, setUserId] = useState(localStorage.getItem("user_id"));
   const [token, setToken] = useState(localStorage.getItem("authTokenJWT"));
-  const [myInfo, setMyInfo] = useState();
-  const [myScores, setMyScores] = useState();
+  const [myInfo, setMyInfo] = useState("");
+  const [myScores, setMyScores] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleUpdateInfo = (e) => {
@@ -103,10 +103,6 @@ const MyAccount = () => {
         confirmButtonColor: "#db2777",
         preConfirm: async (password) => {
           try {
-            //       const githubUrl = `
-            //   https://api.github.com/users/${login}
-            // `;
-
             let dataToSend = { ...myInfo, password: password };
 
             let response = await axios.put(
@@ -115,7 +111,6 @@ const MyAccount = () => {
               { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            // const response = await fetch(githubUrl);
             if (response.status != 200) {
               return Swal.showValidationMessage(`
                 Password wrong maybe????
@@ -123,9 +118,7 @@ const MyAccount = () => {
             } else {
               console.log(response);
             }
-            // return response.json();
           } catch (error) {
-            // console.log(error);
             if (error.response.data.error) {
               Swal.showValidationMessage(`
         Request failed: ${error.response.data.error}
@@ -145,10 +138,6 @@ const MyAccount = () => {
         }
       });
     }
-
-    // alert("SWAL2");
-
-    // alert("To be edited!");
   };
 
   const handleCancelEditing = (e) => {
@@ -163,8 +152,10 @@ const MyAccount = () => {
 
       <GlobalLoading />
       {myInfo && myScores && (
-        <form className="mb-8 w-[60vh] block p-5 bg-white bg-opacity-80 rounded-md">
-          <h3>My Info</h3>
+        <form className="mb-8 w-[35vh] sm:w-[60vh] block p-5 bg-white bg-opacity-80 rounded-md">
+          <h3 className="text-2xl lg:text-4xl mt-5 mb-[3rem] font-semibold text-pink-600 font-poppins">
+            My Info
+          </h3>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-semibold mb-1">
               Email:
@@ -174,7 +165,7 @@ const MyAccount = () => {
               name="email"
               value={myInfo.email}
               onChange={handleUpdateInfo}
-              className="w-full border-2 border-pink-500/50 rounded-md px-4 py-2 mb-4 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
+              className="w-full border-2 text-sm md:text-lg border-pink-500/50 rounded-md px-4 py-2 mb-4 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
               disabled={!isEditing}
             />
           </div>
@@ -191,7 +182,7 @@ const MyAccount = () => {
               name="username"
               value={myInfo.username}
               onChange={handleUpdateInfo}
-              className="w-full border-2 border-pink-500/50 rounded-md px-4 py-2 mb-4 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
+              className="w-full border-2 text-sm md:text-lg border-pink-500/50 rounded-md px-4 py-2 mb-4 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
               disabled={!isEditing}
             />
           </div>
@@ -208,7 +199,7 @@ const MyAccount = () => {
               name="first_name"
               value={myInfo.first_name}
               onChange={handleUpdateInfo}
-              className="w-full border-2 border-pink-500/50 rounded-md px-4 py-2 mb-4 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
+              className="w-full border-2 text-sm md:text-lg border-pink-500/50 rounded-md px-4 py-2 mb-4 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
               disabled={!isEditing}
             />
           </div>
@@ -225,14 +216,14 @@ const MyAccount = () => {
               name="last_name"
               value={myInfo.last_name}
               onChange={handleUpdateInfo}
-              className="w-full border-2 border-pink-500/50 rounded-md px-4 py-2 mb-4 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
+              className="w-full border-2 text-sm md:text-lg border-pink-500/50 rounded-md px-4 py-2 mb-4 focus:border-pink-700 focus:outline-none focus:ring-0 font-fredoka"
               disabled={!isEditing}
             />
           </div>
           <div className="flex justify-center ">
             <button
               type="submit"
-              className="bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 px-6 mr-4"
+              className="bg-pink-600 text-white text-xs md:text-lg py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 px-6 mr-4"
               onClick={handleSubmit}
             >
               {!isEditing ? "Edit Information" : "Save"}
@@ -241,7 +232,7 @@ const MyAccount = () => {
             {isEditing ? (
               <button
                 type="submit"
-                className="bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 px-6"
+                className="bg-pink-600 text-white text-xs md:text-lg py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 px-6"
                 onClick={handleCancelEditing}
               >
                 Cancel
@@ -253,20 +244,29 @@ const MyAccount = () => {
         </form>
       )}
 
-      {myScores ? (
-        <div className="mb-8 w-[60vh] block p-5 bg-white bg-opacity-80 rounded-md">
-          <h3 className="text-lg font-semibold mb-4">My Scores</h3>
-          {myScores.map((score) => (
-            <div key={score.id} className="mb-4">
-              <div className="font-semibold">{`${score.score}/${score.number_of_questions}`}</div>
-              <div>{convertTime(score.created_at, "date")}</div>
-              <div>{convertTime(score.created_at, "time")}</div>
+      <div className="mb-8 w-[35vh] sm:w-[60vh] block p-5 bg-white bg-opacity-80 rounded-md">
+        <h3 className="text-2xl lg:text-4xl mt-5 mb-[3rem] font-semibold text-pink-600 font-poppins">
+          My Scores
+        </h3>
+        {myScores.length ? (
+          myScores.map((score) => (
+            <div key={score.id} className="mb-4 flex">
+              <div className="font-semibold p-3 font-fredoka text-[2rem] sm:text-[3rem] text-yellow-500">{`${score.score}/${score.number_of_questions}`}</div>
+
+              <div className=" flex flex-col justify-between p-5">
+                <div className="text-sm sm:text-2xl font-poppins">
+                  {convertTime(score.created_at, "date")}
+                </div>
+                <div className="text-xs sm:text-2xl font-poppins">
+                  {convertTime(score.created_at, "time")}
+                </div>
+              </div>
             </div>
-          ))}
-        </div>
-      ) : (
-        <></>
-      )}
+          ))
+        ) : (
+          <div>No Scores...</div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,7 @@
+div#menu-background {
+    z-index: 50
+}
+
+div#need-opacity {
+    opacity: 1;
+}

@@ -146,7 +146,7 @@ const AddQuestion = () => {
         ))}
 
         <button
-          className="bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0"
+          className="bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 w-[100%]"
           type="submit"
         >
           Save

@@ -4,6 +4,8 @@ import logoFullWhite from "../images/K-Wave-white-full.webp";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { GlobalLoading, show, hide } from "react-global-loading";
+import burger from "../images/burger.png";
+import "./css/menu.css";
 
 const Navbar = () => {
   let isSignUp;
@@ -97,6 +99,12 @@ const Navbar = () => {
   //   }
   // }
 
+  const [isToggled, setIsToggled] = useState(false);
+
+  const handleToggleMenu = () => {
+    setIsToggled((prev) => !prev);
+  };
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -118,8 +126,6 @@ const Navbar = () => {
       window.removeEventListener("resize", checkScreenWidth);
     };
   }, []); // Empty dependency array ensures that this effect runs only once after initial render
-
-
 
   return (
     <div>
@@ -147,7 +153,7 @@ const Navbar = () => {
         </a>
 
         {!isMobile && (
-          <ul className="flex justify-evenly">
+          <ul className="flex justify-evenly align-middle">
             {isLogIn || token ? (
               <div className="hidden"></div>
             ) : (
@@ -227,7 +233,86 @@ const Navbar = () => {
             )}
           </ul>
         )}
+
+        {isMobile && !isToggled && (
+          <img
+            className="h-[1.5rem]"
+            onClick={handleToggleMenu}
+            src={burger}
+            alt="burger menu"
+          />
+        )}
       </nav>
+
+      {isToggled && (
+        <div
+          id="menu-background"
+          className="fixed left-0 top-0 bottom-0 h-[100%] w-[100%] flex flex-row"
+        >
+          <div
+            id="need-opacity"
+            className="absoulte h-[100%] w-[80%] bg-[#db2777] flex relative pl-5 p-3 font-poppins"
+          >
+            <ul>
+              {isLogIn || token ? (
+                <div className="hidden"></div>
+              ) : (
+                <li className="text-white my-2">
+                  <a href="/login">Log in</a>
+                </li>
+              )}
+
+              {isSignUp || token ? (
+                <div className="hidden"></div>
+              ) : (
+                <li className="text-white my-2">
+                  <a href="/signup">Sign Up</a>
+                </li>
+              )}
+
+              {isAdmin && !isAddQuestion && (
+                <li className="text-white my-2">
+                  <a href="/addquestion">Add Question</a>
+                </li>
+              )}
+              {/* 
+          {token ? hide() : <></>}
+
+          {onlyHome ? hide() : <></>} */}
+
+              {isAdmin && (
+                <li className="text-white my-2">
+                  <a href="/myquestions">My Questions</a>
+                </li>
+              )}
+
+              <li className="text-white my-2">
+                <a href="/play">Play</a>
+              </li>
+
+              {token && (
+                <li className="text-white my-2">
+                  <a href="/myaccount">My Account</a>
+                </li>
+              )}
+
+              {token && (
+                <li className="text-white my-2">
+                  <form onSubmit={handleLogOut}>
+                    <button>Log out</button>
+                  </form>
+                </li>
+              )}
+            </ul>
+            <div
+              onClick={handleToggleMenu}
+              className="text-white absolute right-3 top-1"
+            >
+              X
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

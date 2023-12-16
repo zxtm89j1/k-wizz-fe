@@ -8,9 +8,8 @@ import EditQuestionForm from "../components/EditQuestionForm";
 import searchIcon from "../images/searchicon.png";
 
 const MyQuestions = () => {
-  const [questions, setQuestions] = useState();
+  const [questions, setQuestions] = useState([]);
   let userId = localStorage.getItem("user_id");
-  // let token = localStorage.getItem("authTokenJWT");
 
   const [token, setToken] = useState(localStorage.getItem("authTokenJWT"));
   const [isSearching, setIsSearching] = useState(false);
@@ -36,7 +35,9 @@ const MyQuestions = () => {
         );
 
         if (response.status === 200) {
-          setQuestions((prevQuestions) => response.data.success);
+          await setQuestions((prevQuestions) => response.data.success);
+
+          hide();
         }
       } catch (error) {
         await Swal.fire({
@@ -45,8 +46,6 @@ const MyQuestions = () => {
           icon: "error",
           confirmButtonText: "Ok",
         });
-
-        hide();
       }
     };
 
@@ -97,7 +96,7 @@ const MyQuestions = () => {
   };
 
   const [questionToEdit, setQuestionToEdit] = useState();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState([]);
   const [queryResults, setQueryResults] = useState([]);
 
   const handleQuestionEdit = async (e, question) => {
@@ -159,67 +158,51 @@ const MyQuestions = () => {
           alt="search--v1"
         />
       </form>
-      {queryResults ? console.log(queryResults) : <></>}
 
-      {/* {query ? (
-        <div className="flex justify-center">
-          <div>There are no questions...</div>
+      {isSearching && !queryResults.length && (
+        <div className="text-center mt-10 text-xl lg:text-2xl">
+          No related questions...
         </div>
-      ) : (
-        <></>
-      )} */}
-      {/* 
-      {query ? (questions.filter(question => )) : <></>} */}
-      {queryResults ? console.log(queryResults) : <></>}
-      {queryResults && query && isSearching ? (
-        <div className="">
+      )}
+
+      {queryResults.length && isSearching ? (
+        <div className="flex justify-center items-center flex-col">
           {queryResults.map((question, index) => (
-            <div className="flex justify-center items-center flex-col">
-              <div
-                key={question.id}
-                className="border border-pink-500/50 p-4 m-4 rounded-md bg-pink-200 flex justify-between items-center w-[5vh] "
-              >
-                <div>
-                  <div className="text-xs md:text-lg font-bold mb-2 w-[50rem]">
-                    {index + 1 + ". " + question.question_text}
+            <div
+              key={question.id}
+              className="border border-pink-500/50 p-4 m-4 rounded-md bg-pink-200 flex justify-between sm:items-center w-[40vh] sm:w-[60vh] lg:w-[100vh] xl:w-[75rem] flex-col sm:flex-row"
+            >
+              <div className="text-sm md:text-base font-bold mb-0 sm:mb-2">
+                {index + 1 + ". " + question.question_text}
 
-                    <Choices
-                      key={question.id}
-                      id={question.id}
-                      choices={question.choices}
-                    />
-                  </div>
-                </div>
+                <Choices
+                  key={question.id}
+                  id={question.id}
+                  choices={question.choices}
+                />
+              </div>
 
-                <div className="w-[15rem] flex justify-between">
-                  <button
-                    onClick={(e) => handleQuestionEdit(e, question)}
-                    className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 w-[5rem]"
-                  >
-                    Edit
-                  </button>
+              <div className="flex flex-col sm:flex-row justify-normal sm:ml-5">
+                <button
+                  onClick={(e) => handleQuestionEdit(e, question)}
+                  className="bg-pink-500 text-white text-xs lg:text-sm px-4 py-2 mb-5 mt-0 rounded-md hover:bg-pink-600 w-[5rem]"
+                >
+                  Edit
+                </button>
 
-                  <button
-                    onClick={(e) =>
-                      handleQuestionDelete(e, Number(question.id))
-                    }
-                    className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 w-[5rem]"
-                  >
-                    Delete
-                  </button>
-                </div>
+                <button
+                  onClick={(e) => handleQuestionDelete(e, Number(question.id))}
+                  className="bg-pink-500 text-white text-xs lg:text-sm px-4 py-2 mb-5 mt-0 rounded-md hover:bg-pink-600 w-[5rem] m-0 xl:ml-1"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        // <div>
-        //   <div>No questions...</div>
-        // </div>
         <></>
       )}
-
-      {/* {questions ? console.log(questions[0]) : <></>} */}
 
       {isEditing && (
         <EditQuestionForm
@@ -233,15 +216,15 @@ const MyQuestions = () => {
           <div className="flex justify-center items-center flex-col">
             <GlobalLoading />
 
-            {questions ? hide() : <></>}
+            {/* {questions.length != 0 ? hide() : <></>} */}
 
-            {questions ? (
+            {questions.length ? (
               questions.map((question, index) => (
                 <div
                   key={question.id}
                   className="border border-pink-500/50 p-4 m-4 rounded-md bg-pink-200 flex justify-between sm:items-center w-[40vh] sm:w-[60vh] lg:w-[100vh] xl:w-[75rem] flex-col sm:flex-row"
                 >
-                  <div className="text-sm md:text-base font-bold mb-0 sm:mb-2 ">
+                  <div className="text-sm md:text-base font-bold mb-0 sm:mb-2">
                     {index + 1 + ". " + question.question_text}
 
                     <Choices
@@ -251,7 +234,7 @@ const MyQuestions = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col justify-normal sm:ml-5">
+                  <div className="flex flex-col sm:flex-row justify-normal sm:ml-5">
                     <button
                       onClick={(e) => handleQuestionEdit(e, question)}
                       className="bg-pink-500 text-white text-xs lg:text-sm px-4 py-2 mb-5 mt-0 rounded-md hover:bg-pink-600 w-[5rem]"
@@ -271,7 +254,9 @@ const MyQuestions = () => {
                 </div>
               ))
             ) : (
-              <div>No questions. Please add some!</div>
+              <div className="text-center mt-10 text-xl lg:text-2xl">
+                No questions. Please add some!
+              </div>
             )}
           </div>
           {isSearching && (

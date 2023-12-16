@@ -107,57 +107,63 @@ const PlayQuiz = () => {
     }
   };
 
+  const fireSwal = async (message, icon) => {
+    // correctAudio.play();
+
+    // if (score === 1) {
+    //   setScoreOverall((prev) => prev++);
+    // }
+
+    await Swal.fire({
+      title: "You finished the quiz! Do you want to restart the game?",
+      text: message,
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: "#db2777",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, restart!",
+      cancelButtonText: "No, record score.",
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.reload();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        recordScore();
+      }
+    });
+  };
+
   const handleSetScore = async (score) => {
+    await setScoreOverall((prev) => prev + score);
     console.log(score);
 
-    const fireSwal = async (message, icon) => {
-      // correctAudio.play();
-      await Swal.fire({
-        title: "You finished the quiz! Do you want to restart the game?",
-        text: message,
-        icon: icon,
-        showCancelButton: true,
-        confirmButtonColor: "#228B22",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, restart!",
-        cancelButtonText: "No, record score.",
-        allowOutsideClick: false,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          recordScore();
-        }
-      });
-    };
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion((prev) => prev + 1);
+    }
 
     if (currentQuestion === questions.length - 1) {
       // alert("DONE!!");
       await setEnd((prev) => true);
 
-      if (scoreOverall <= questions.length * 0.3) {
+      if (scoreOverall <= Math.round(questions.length * 0.3)) {
         // wrongAudio.play();
         failAudio.play();
 
-        fireSwal(`Sadly, You only got ${scoreOverall}!`, "error");
+        fireSwal(`Sadly, You only got ${scoreOverall}!`, "error", 0);
       } else {
         // correctAudio.play();
+        // await setScoreOverall((prev) => prev++);
         successAudio.play();
         fireSwal(
           `You got ${scoreOverall} correct ${
             scoreOverall === 1 ? "answer" : "answers"
           } out of ${questions.length} questions!`,
-          "success"
+          "success",
+          1
         );
       }
 
       return;
-    }
-
-    setScoreOverall((prev) => prev + score);
-
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
     }
   };
 
@@ -253,11 +259,13 @@ const PlayQuiz = () => {
 
   return (
     <div className="text-center p-4 min-h-screen relative bg-gradient-to-br from-white to-pink-500">
-      <img
-        src={wonyoung}
-        alt="wonyoung"
-        className="transform scale-x-[-1] absolute right-0 bottom-0 h-[60vh] opacity-70 z-10"
-      />
+      {!end && (
+        <img
+          src={wonyoung}
+          alt="wonyoung"
+          className="transform scale-x-[-1] absolute right-0 bottom-0 h-[60vh] opacity-40 md:opacity-70 z-10"
+        />
+      )}
       {questions && (
         <div>
           <GlobalLoading />
@@ -286,9 +294,11 @@ const PlayQuiz = () => {
 
       {end && (
         <div className="flex justify-center align-middle h-[80vh] z-20">
-          <img src={trophy2}></img>
+          <img className="h-[50%] sm:h-[100%]" src={trophy2}></img>
         </div>
       )}
+
+      {questions ? console.log(questions) : <></>}
     </div>
   );
 };

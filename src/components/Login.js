@@ -16,8 +16,6 @@ const Login = () => {
       ...prevFormData,
       [e.target.name]: e.target.value,
     }));
-
-    // console.log(formData);
   };
 
   const handleSubmit = async (e) => {
@@ -34,8 +32,6 @@ const Login = () => {
           },
         }
       );
-
-      // console.log(response);
 
       if (response.status === 200) {
         token = response.data.access_token;
@@ -102,10 +98,6 @@ const Login = () => {
       }
     }
   };
-
-  // const previousPageUrl = document.referrer;
-
-  // console.log(`Previously visited page URL: ${previousPageUrl}`);
 
   return (
     <div className="h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-purple-300 flex justify-center items-center relative">
