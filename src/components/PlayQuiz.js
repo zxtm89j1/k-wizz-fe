@@ -108,13 +108,7 @@ const PlayQuiz = () => {
   };
 
   const fireSwal = async (message, icon) => {
-    // correctAudio.play();
-
-    // if (score === 1) {
-    //   setScoreOverall((prev) => prev++);
-    // }
-
-    await Swal.fire({
+    Swal.fire({
       title: "You finished the quiz! Do you want to restart the game?",
       text: message,
       icon: icon,
@@ -133,37 +127,37 @@ const PlayQuiz = () => {
     });
   };
 
-  const handleSetScore = async (score) => {
-    await setScoreOverall((prev) => prev + score);
-    console.log(score);
+  useEffect(() => {
+    try {
+      if (currentQuestion === questions.length - 1) {
+        if (scoreOverall <= Math.round(questions.length * 0.3)) {
+          failAudio.play();
 
+          fireSwal(`Sadly, You only got ${scoreOverall}!`, "error");
+        } else {
+          successAudio.play();
+
+          fireSwal(
+            `You got ${scoreOverall} correct ${
+              scoreOverall === 1 ? "answer" : "answers"
+            } out of ${questions.length} questions!`,
+            "success"
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [end]);
+
+  const handleSetScore = async (score) => {
+    setScoreOverall((prev) => prev + score);
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     }
 
     if (currentQuestion === questions.length - 1) {
-      // alert("DONE!!");
-      await setEnd((prev) => true);
-
-      if (scoreOverall <= Math.round(questions.length * 0.3)) {
-        // wrongAudio.play();
-        failAudio.play();
-
-        fireSwal(`Sadly, You only got ${scoreOverall}!`, "error", 0);
-      } else {
-        // correctAudio.play();
-        // await setScoreOverall((prev) => prev++);
-        successAudio.play();
-        fireSwal(
-          `You got ${scoreOverall} correct ${
-            scoreOverall === 1 ? "answer" : "answers"
-          } out of ${questions.length} questions!`,
-          "success",
-          1
-        );
-      }
-
-      return;
+      setEnd((prev) => true);
     }
   };
 
@@ -241,21 +235,6 @@ const PlayQuiz = () => {
       }
     });
   }
-
-  // const yourButtonRef = useRef(null);
-
-  // useEffect(() => {
-  //   if (yourButtonRef.current) {
-  //     // Simulate a click on the button
-  //     yourButtonRef.current.click();
-  //   }
-  // });
-
-  // const handleButtonClick = () => {
-  //   // console.log("Button Clicked!");
-  //   // Add your button click logic here.
-  //   welcomeAudio.play();
-  // };
 
   return (
     <div className="text-center p-4 min-h-screen relative bg-gradient-to-br from-white to-pink-500">

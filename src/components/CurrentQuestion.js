@@ -40,7 +40,11 @@ const CurrentQuestion = (props) => {
 
       if (chosenAnswer == correctAnswer) {
         if (currentQuestionNumber == numberOfQuestions - 1) {
-          correctAudio.play();
+          try {
+            correctAudio.play();
+          } catch (error) {
+            console.log(error);
+          }
 
           Swal.fire({
             title: "You're right!",
@@ -58,7 +62,12 @@ const CurrentQuestion = (props) => {
             }
           });
         } else {
-          correctAudio.play();
+          try {
+            correctAudio.play();
+          } catch (error) {
+            console.log(error);
+          }
+
           Swal.fire({
             title: "You're right!",
             text: "You got the correct answer!",
@@ -79,7 +88,11 @@ const CurrentQuestion = (props) => {
         }
       } else {
         if (currentQuestionNumber == numberOfQuestions - 1) {
-          wrongAudio.play();
+          try {
+            wrongAudio.play();
+          } catch (error) {
+            console.log(error);
+          }
           Swal.fire({
             title: "You're wrong!",
             text: "You got the wrong answer!",
@@ -96,7 +109,11 @@ const CurrentQuestion = (props) => {
             }
           });
         } else {
-          wrongAudio.play();
+          try {
+            wrongAudio.play();
+          } catch (error) {
+            console.log(error);
+          }
           Swal.fire({
             title: "You're wrong!",
             text: "You got the wrong answer!",
