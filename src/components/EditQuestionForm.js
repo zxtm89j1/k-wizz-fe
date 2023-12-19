@@ -55,8 +55,6 @@ const EditQuestionForm = (props) => {
     e.preventDefault();
     show();
 
-    console.log(questionNewCopy);
-
     try {
       let response = await axios.patch(
         `http://localhost:8000/api/auth/editquestion/${props.question.id}`,
@@ -65,7 +63,6 @@ const EditQuestionForm = (props) => {
       );
 
       if (response.status === 200) {
-        await console.log(response);
         await Swal.fire({
           title: "Success!",
           text: response.data.message,
@@ -101,7 +98,7 @@ const EditQuestionForm = (props) => {
     <div className="flex justify-center items-center flex-col h-[100vh] fixed top-0 bottom-0 left-0 right-0 bg-gray-500 bg-opacity-60">
       <GlobalLoading />
       <form
-        className="max-w-md w-full bg-white z-20 p-5 rounded-lg"
+        className="max-w-md w-full bg-white z-20 p-5 rounded-lg mx-2"
         onSubmit={handleSubmit}
       >
         <h2
@@ -155,7 +152,7 @@ const EditQuestionForm = (props) => {
         )}
 
         <button
-          className="bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0"
+          className="bg-pink-600 w-full text-white px-4 py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0"
           type="submit"
         >
           Save

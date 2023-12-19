@@ -46,7 +46,6 @@ const Home = () => {
           hide();
         }
       } catch (error) {
-        console.log(error);
         hide();
         // Swal.fire({
         //   title: "Error!",

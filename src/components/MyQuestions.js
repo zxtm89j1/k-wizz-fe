@@ -185,14 +185,14 @@ const MyQuestions = () => {
               <div className="flex flex-col sm:flex-row justify-normal sm:ml-5">
                 <button
                   onClick={(e) => handleQuestionEdit(e, question)}
-                  className="bg-pink-500 text-white text-xs lg:text-sm px-4 py-2 mb-5 mt-0 rounded-md hover:bg-pink-600 w-[5rem]"
+                  className="bg-pink-500 text-white text-xs lg:text-md px-2 py-1 sm:px-4 sm:py-2 mb-5 mt-0 rounded-md hover:bg-pink-600 w-[5rem]"
                 >
                   Edit
                 </button>
 
                 <button
                   onClick={(e) => handleQuestionDelete(e, Number(question.id))}
-                  className="bg-pink-500 text-white text-xs lg:text-sm px-4 py-2 mb-5 mt-0 rounded-md hover:bg-pink-600 w-[5rem] m-0 xl:ml-1"
+                  className="bg-pink-500 text-white text-xs lg:text-md px-2 py-1 sm:px-4 sm:py-2 mb-5 mt-0 rounded-md hover:bg-pink-600 sm:w-[5rem] m-0 xl:ml-1"
                 >
                   Delete
                 </button>

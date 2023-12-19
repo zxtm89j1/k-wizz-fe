@@ -17,6 +17,9 @@ const MyAccount = () => {
     }));
   };
 
+  const [pageNumbers, setPageNumbers] = useState();
+
+  const [paginationData, setPaginationData] = useState();
   useEffect(() => {
     let getMyScores = async () => {
       try {
@@ -30,7 +33,20 @@ const MyAccount = () => {
         );
 
         if (response.status === 200) {
-          setMyScores((prev) => response.data.message);
+          // setMyScores((prev) => response.data.message);
+          console.log(response.data.message);
+
+          setPaginationData((prev) => response.data.message);
+          setMyScores((prev) => response.data.message.data);
+
+          // let array = [];
+
+          // for (let i = 0; i <= response.data.message.last_page; i++) {
+          //   array.push("page");
+          // }
+
+          // // console.log(array);
+          // setArrayOfPages((prev) => array);
         }
       } catch (error) {
         console.log(error);
@@ -146,6 +162,39 @@ const MyAccount = () => {
     setIsEditing((prev) => false);
   };
 
+  const getPageNumbers = () => {
+    let pageNumbers = [];
+
+    for (let i = 0; i < paginationData.last_page; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
+  };
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePage = async (e) => {
+    e.preventDefault();
+
+    let response = await axios.get(
+      `http://localhost:8000/api/auth/myscores/${userId}?page=${Number(
+        e.target.value
+      )}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      setCurrentPage((prev) => Number(e.target.value));
+
+      setMyScores((prev) => response.data.message.data);
+    }
+  };
+
   return (
     <div className="min-h-screen p-4 flex justify-center items-center flex-col bg-gradient-to-r from-teal-300 via-teal-500 to-teal-700">
       {myInfo && myScores && hide()}
@@ -223,7 +272,7 @@ const MyAccount = () => {
           <div className="flex justify-center ">
             <button
               type="submit"
-              className="bg-pink-600 text-white text-xs md:text-lg py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 px-6 mr-4"
+              className="bg-pink-600 text-white text-xs md:text-base font-poppins py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 px-6 mr-4"
               onClick={handleSubmit}
             >
               {!isEditing ? "Edit Information" : "Save"}
@@ -232,7 +281,7 @@ const MyAccount = () => {
             {isEditing ? (
               <button
                 type="submit"
-                className="bg-pink-600 text-white text-xs md:text-lg py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 px-6"
+                className="bg-pink-600 text-white text-xs md:text-base font-poppins py-2 rounded-md hover:bg-pink-700 focus:border-pink-700 focus:outline-none focus:ring-0 px-6"
                 onClick={handleCancelEditing}
               >
                 Cancel
@@ -244,28 +293,54 @@ const MyAccount = () => {
         </form>
       )}
 
-      <div className="mb-8 w-[35vh] sm:w-[60vh] block p-5 bg-white bg-opacity-80 rounded-md">
+      <div className="mb-8 w-[35vh] sm:w-[60vh] p-5 bg-white bg-opacity-80 rounded-md">
         <h3 className="text-2xl lg:text-4xl mt-5 mb-[3rem] font-semibold text-pink-600 font-poppins">
           My Scores
         </h3>
         {myScores.length ? (
-          myScores.map((score) => (
-            <div key={score.id} className="mb-4 flex">
-              <div className="font-semibold p-3 font-fredoka text-[2rem] sm:text-[3rem] text-yellow-500">{`${score.score}/${score.number_of_questions}`}</div>
+          <div>
+            <div className="h-[30rem] sm:h-[40rem]">
+              {myScores.map((score) => (
+                <div key={score.id} className="mb-4 flex">
+                  <div className="font-semibold p-3 font-fredoka text-[2rem] sm:text-[3rem] text-yellow-500">{`${score.score}/${score.number_of_questions}`}</div>
 
-              <div className=" flex flex-col justify-between p-5">
-                <div className="text-sm sm:text-2xl font-poppins">
-                  {convertTime(score.created_at, "date")}
+                  <div className=" flex flex-col justify-between p-5">
+                    <div className="text-sm sm:text-2xl font-poppins">
+                      {convertTime(score.created_at, "date")}
+                    </div>
+                    <div className="text-xs sm:text-2xl font-poppins">
+                      {convertTime(score.created_at, "time")}
+                    </div>
+                  </div>
                 </div>
-                <div className="text-xs sm:text-2xl font-poppins">
-                  {convertTime(score.created_at, "time")}
-                </div>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <div className="flex justify-center overflow-x-auto ">
+                {getPageNumbers().map((pageNumber, index) => (
+                  <button
+                    onClick={handleChangePage}
+                    value={Number(index + 1)}
+                    className={`${
+                      currentPage === Number(index + 1)
+                        ? "bg-pink-700 text-white"
+                        : "bg-pink-500 text-white hover:bg-pink-600"
+                    } px-3 py-2 rounded-md mx-1 text-xs md:text-lg`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
               </div>
             </div>
-          ))
+          </div>
         ) : (
-          <div>No Scores...</div>
+          <div className="text-center font-poppins my-10 text-xl lg:text-2xl">
+            No Scores...
+          </div>
         )}
+
+        {console.log(paginationData)}
       </div>
     </div>
   );

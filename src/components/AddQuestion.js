@@ -51,7 +51,6 @@ const AddQuestion = () => {
   const handleSubmit = async (e) => {
     show();
     e.preventDefault();
-    console.log(question);
 
     try {
       let response = await axios.post(

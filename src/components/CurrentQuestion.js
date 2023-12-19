@@ -42,9 +42,7 @@ const CurrentQuestion = (props) => {
         if (currentQuestionNumber == numberOfQuestions - 1) {
           try {
             correctAudio.play();
-          } catch (error) {
-            console.log(error);
-          }
+          } catch (error) {}
 
           Swal.fire({
             title: "You're right!",
@@ -64,9 +62,7 @@ const CurrentQuestion = (props) => {
         } else {
           try {
             correctAudio.play();
-          } catch (error) {
-            console.log(error);
-          }
+          } catch (error) {}
 
           Swal.fire({
             title: "You're right!",
@@ -75,7 +71,7 @@ const CurrentQuestion = (props) => {
             showCancelButton: false,
             confirmButtonColor: "#db2777",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Ok",
+            confirmButtonText: "Next Question",
             allowOutsideClick: false,
           }).then((result) => {
             if (result.isConfirmed) {
@@ -90,9 +86,7 @@ const CurrentQuestion = (props) => {
         if (currentQuestionNumber == numberOfQuestions - 1) {
           try {
             wrongAudio.play();
-          } catch (error) {
-            console.log(error);
-          }
+          } catch (error) {}
           Swal.fire({
             title: "You're wrong!",
             text: "You got the wrong answer!",
@@ -111,9 +105,7 @@ const CurrentQuestion = (props) => {
         } else {
           try {
             wrongAudio.play();
-          } catch (error) {
-            console.log(error);
-          }
+          } catch (error) {}
           Swal.fire({
             title: "You're wrong!",
             text: "You got the wrong answer!",
@@ -170,9 +162,7 @@ const CurrentQuestion = (props) => {
         if (!timeUp) {
           tickAudio.play();
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
 
     window.addEventListener("click", playTickAudio);
@@ -184,9 +174,7 @@ const CurrentQuestion = (props) => {
           tickAudio.pause();
           tickAudio.currentTime = 0;
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
   }, [timeUp]);
 
@@ -212,20 +200,12 @@ const CurrentQuestion = (props) => {
 
   return (
     <div className="flex justify-center">
-      {correctAnswer && chosenAnswer ? (
-        <>
-          {console.log("Chosen answer: " + chosenAnswer)}
-          {console.log("Correct answer: " + correctAnswer)}
-        </>
-      ) : (
-        <></>
-      )}
       <div className="p-4 w-[90vh] block self-center z-20">
         {!timeUp && (
           <div className="mb-4 flex justify-center h-[40vh] ">
             <CountdownCircleTimer
               isPlaying
-              duration={5}
+              duration={15}
               colors={["#FF6347", "#FF4500", "#FF7F50", "#FF8C00"]}
               colorsTime={[15, 5, 2, 0]}
               onComplete={() => ({ shouldRepeat: false, delay: 1 })}
@@ -243,7 +223,6 @@ const CurrentQuestion = (props) => {
         </div>
 
         <div className=" w-full self-center">
-          {console.log(question)}
           {question.choices.map((choice, index) => (
             <div
               key={index}
